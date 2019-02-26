@@ -27,9 +27,9 @@ public class TestCalc {
 		
 		Calculator calc = new Calculator();
 		
-		double actual = calc.divide(0, 7);
+		double actual = calc.divide(7, 7);
 		
-		assertEquals(7, actual, 0.111);
+		assertEquals(1, actual, 0.111);
 	}
 	
 	
