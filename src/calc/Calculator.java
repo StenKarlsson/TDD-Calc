@@ -16,15 +16,45 @@ public class Calculator {
 			}
 			
 			else {
-				fail("Can't divide by zero");
-				return (Double) null;
+				throw new ArithmeticException("Can't divide by zero");
 			}
 			
 		 
-//		catch (NullPointerException expected) {
-//			// If divide by zero
-//			return (Double) null;
-//		}
-//		return result;
+	}
+	
+	public double multiply(double d1, double d2) {
+		
+		return d1*d2;
+	}
+
+	public double subtraction(double d1, double d2) {
+		
+		return d1 - d2;
+	}
+
+	public String calculateExpression(String equation) {
+
+		
+		double result = 0;
+		if (equation.contains("+")) {
+		
+			String[] parts = equation.split("[+]");
+			for (int i = 0; i < parts.length-1; i++) {
+				result = add(result, Double.parseDouble(parts[i]));
+				System.out.println(parts[i]);
+			}
+			System.out.println(result);
+			System.out.println(equation);
+		}
+
+		if (equation.contains("-")) {
+			
+			String parts[] = equation.split("-");
+			for (int i = 0; i < parts.length; i++) {
+				System.out.println(parts[i]);
+			}
+		}
+		
+		return Double.toString(result);
 	}
 }

@@ -2,14 +2,29 @@ package testCalc;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import calc.Calculator;
 
 public class TestCalc {
 
+	
 	@Test
-	public void add_test() {
+	public void calculateExpression_test() {
+		
+		Calculator calc = new Calculator();
+		
+		String expression = "5+7+5-2";
+		String expected = "15";
+		String result = calc.calculateExpression(expression);
+		assertEquals("17.0", result);
+	}
+	
+	
+	@Ignore
+	@Test
+	public void addition_test() {
 		
 		// Arrange
 		Calculator calc = new Calculator();
@@ -22,6 +37,20 @@ public class TestCalc {
 		assertEquals(9d, actual, 0.111);
 	}
 	
+	@Ignore
+	@Test
+	public void subtratction_test() {
+		
+		Calculator calc = new Calculator();
+		
+		double actual = calc.subtraction(25, 10);
+		
+		assertEquals(15d, actual, 0.111);
+		
+	}
+	
+	
+	@Ignore
 	@Test
 	public void divide_test() {
 		
@@ -30,6 +59,17 @@ public class TestCalc {
 		double actual = calc.divide(7, 7);
 		
 		assertEquals(1, actual, 0.111);
+	}
+	
+	
+	@Ignore
+	@Test
+	public void multiplication_test() {
+		Calculator calc = new Calculator();
+		
+		double actual = calc.multiply(5, 10);
+		
+		assertEquals(50d, actual, 0.111);
 	}
 	
 	
