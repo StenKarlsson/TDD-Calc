@@ -1,6 +1,5 @@
 package calc;
 
-import static org.junit.Assert.fail;
 
 public class Calculator {
 
@@ -9,7 +8,6 @@ public class Calculator {
 	}
 	
 	public double divide(double a, double b) {
-		double result = 0;
 		
 			if(a != 0 && b != 0) {
 				return a / b;
@@ -55,24 +53,39 @@ public class Calculator {
 		char[] operands = {'+', '-'};
 		int counter = 0;
 		boolean timeToCalc = false;
+		boolean firstLap = true;
 		
 		for (int i = 0; i < eq.length; i++) {
-			
-			if(counter >= 2) {
+		
+			if(timeToCalc == true) {
 				parts[0] = calculate(operand, Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
 				counter = 1;
-				parts[counter] = "";
+				timeToCalc = false;
 			}
+			
+			
 			
 			if (eq[i] == operands[0] || eq[i] == operands[1]) {
 			
 				operand = eq[i];
-				counter++;
+				if(firstLap == true) {
+					counter++;
+				}
 				
 			}
 			else {
 				parts[counter] = parts[counter] + eq[i];
+				
+				if(eq[i+1] == operands[0] && firstLap == false || eq[i+1] == operands[1] && firstLap == false) {
+					timeToCalc = true;
+				}
 			}
+			
+			if(i == eq.length) {
+				result = Double.parseDouble(parts[0]);
+			}
+			
+			firstLap = false;
 		}
 		
 		
