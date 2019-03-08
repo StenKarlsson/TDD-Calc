@@ -4,7 +4,7 @@ import static org.junit.Assert.fail;
 
 public class Calculator {
 
-	public double add(double a, double b){
+	public double addition(double a, double b){
 		return a + b;
 	}
 	
@@ -32,29 +32,52 @@ public class Calculator {
 		return d1 - d2;
 	}
 
+	private String calculate(char operand, double d1, double d2) {
+		double result = 0;
+		String resultStr = "";
+		switch (operand) {
+		case '+': result = addition(d1, d2);
+			
+			break;
+
+		case '-': result = subtraction(d1, d2);
+		}
+		
+		resultStr = result + "";
+		return resultStr;
+	}
 	public String calculateExpression(String equation) {
 
-		
 		double result = 0;
-		if (equation.contains("+")) {
+		char[] eq = equation.toCharArray();
+		String[] parts = {"", ""};
+		char operand = 0;
+		char[] operands = {'+', '-'};
+		int counter = 0;
+		boolean timeToCalc = false;
 		
-			String[] parts = equation.split("[+]");
-			for (int i = 0; i < parts.length-1; i++) {
-				result = add(result, Double.parseDouble(parts[i]));
-				System.out.println(parts[i]);
-			}
-			System.out.println(result);
-			System.out.println(equation);
-		}
-
-		if (equation.contains("-")) {
+		for (int i = 0; i < eq.length; i++) {
 			
-			String parts[] = equation.split("-");
-			for (int i = 0; i < parts.length; i++) {
-				System.out.println(parts[i]);
+			if(counter >= 2) {
+				parts[0] = calculate(operand, Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+				counter = 1;
+				parts[counter] = "";
+			}
+			
+			if (eq[i] == operands[0] || eq[i] == operands[1]) {
+			
+				operand = eq[i];
+				counter++;
+				
+			}
+			else {
+				parts[counter] = parts[counter] + eq[i];
 			}
 		}
 		
+		
+		
+		System.out.println(result);
 		return Double.toString(result);
 	}
 }

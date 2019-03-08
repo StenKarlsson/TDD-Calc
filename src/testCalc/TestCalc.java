@@ -16,9 +16,9 @@ public class TestCalc {
 		Calculator calc = new Calculator();
 		
 		String expression = "5+7+5-2";
-		String expected = "15";
+		String expected = "15.0";
 		String result = calc.calculateExpression(expression);
-		assertEquals("17.0", result);
+		assertEquals(expected, result);
 	}
 	
 	
@@ -30,7 +30,7 @@ public class TestCalc {
 		Calculator calc = new Calculator();
 		
 		// Act
-		double actual = calc.add(3, 6);
+		double actual = calc.addition(3, 6);
 		
 		
 		// Assert
