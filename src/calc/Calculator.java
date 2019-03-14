@@ -3,6 +3,9 @@ package calc;
 
 public class Calculator {
 
+	
+	
+	
 	public double addition(double a, double b){
 		return a + b;
 	}
@@ -20,7 +23,7 @@ public class Calculator {
 		 
 	}
 	
-	public double multiply(double d1, double d2) {
+	public double multiplication(double d1, double d2) {
 		
 		return d1*d2;
 	}
@@ -30,67 +33,64 @@ public class Calculator {
 		return d1 - d2;
 	}
 
-	private String calculate(char operand, double d1, double d2) {
+	
+	public String calculate(String equation) {
+		
 		double result = 0;
-		String resultStr = "";
-		switch (operand) {
-		case '+': result = addition(d1, d2);
+		
+		if(equation.contains("+")) {
+			String[] parts = equation.split("\\+");
 			
-			break;
-
-		case '-': result = subtraction(d1, d2);
+			for (String str : parts) {
+				result = addition(result, Double.parseDouble(str));
+			}
+			//result = addition(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+			
+			
+		}
+		if(equation.contains("-")) {
+			String[] parts = equation.split("-");
+			result = Double.parseDouble(parts[0]);
+			
+			for (int i = 1; i < parts.length; i++) {
+				result = subtraction(result, Double.parseDouble(parts[i]));
+			}
+			
+			//result = subtraction(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+			
 		}
 		
-		resultStr = result + "";
+		if(equation.contains("/")) {
+			
+			String[] parts = equation.split("/");
+			result = Double.parseDouble(parts[0]);
+			
+			for (int i = 1; i < parts.length; i++) {
+				
+				result = divide(result, Double.parseDouble(parts[i]));
+				
+			}
+			
+			//result = divide(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+		}
+		
+		if(equation.contains("*")) {
+
+			String[] parts = equation.split("\\*");
+			
+			result = Double.parseDouble(parts[0]);
+			
+			for (int i = 1; i < parts.length; i++) {
+			
+				result = multiplication(result, Double.parseDouble(parts[i]));
+			}
+			
+			//result = multiply(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+			
+		}
+		
+		String resultStr = result + "";
 		return resultStr;
 	}
-	public String calculateExpression(String equation) {
-
-		double result = 0;
-		char[] eq = equation.toCharArray();
-		String[] parts = {"", ""};
-		char operand = 0;
-		char[] operands = {'+', '-'};
-		int counter = 0;
-		boolean timeToCalc = false;
-		boolean firstLap = true;
-		
-		for (int i = 0; i < eq.length; i++) {
-		
-			if(timeToCalc == true) {
-				parts[0] = calculate(operand, Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
-				counter = 1;
-				timeToCalc = false;
-			}
-			
-			
-			
-			if (eq[i] == operands[0] || eq[i] == operands[1]) {
-			
-				operand = eq[i];
-				if(firstLap == true) {
-					counter++;
-				}
-				
-			}
-			else {
-				parts[counter] = parts[counter] + eq[i];
-				
-				if(eq[i+1] == operands[0] && firstLap == false || eq[i+1] == operands[1] && firstLap == false) {
-					timeToCalc = true;
-				}
-			}
-			
-			if(i == eq.length) {
-				result = Double.parseDouble(parts[0]);
-			}
-			
-			firstLap = false;
-		}
-		
-		
-		
-		System.out.println(result);
-		return Double.toString(result);
-	}
+	
 }
