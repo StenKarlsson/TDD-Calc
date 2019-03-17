@@ -3,94 +3,82 @@ package calc;
 
 public class Calculator {
 
-	
-	
-	
-	public double addition(double a, double b){
-		return a + b;
-	}
-	
-	public double divide(double a, double b) {
+	private double sum(String equation) {
 		
-			if(a != 0 && b != 0) {
-				return a / b;
-			}
-			
-			else {
-				throw new ArithmeticException("Can't divide by zero");
-			}
-			
-		 
-	}
-	
-	public double multiplication(double d1, double d2) {
 		
-		return d1*d2;
-	}
-
-	public double subtraction(double d1, double d2) {
-		
-		return d1 - d2;
-	}
-
-	
-	public String calculate(String equation) {
-		
-		double result = 0;
 		
 		if(equation.contains("+")) {
-			String[] parts = equation.split("\\+");
-			
-			for (String str : parts) {
-				result = addition(result, Double.parseDouble(str));
-			}
-			//result = addition(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
-			
-			
+			return processAddition(equation);
 		}
 		if(equation.contains("-")) {
-			String[] parts = equation.split("-");
-			result = Double.parseDouble(parts[0]);
-			
-			for (int i = 1; i < parts.length; i++) {
-				result = subtraction(result, Double.parseDouble(parts[i]));
-			}
-			
-			//result = subtraction(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
-			
+			return ProcessSubtraction(equation);
 		}
-		
-		if(equation.contains("/")) {
-			
-			String[] parts = equation.split("/");
-			result = Double.parseDouble(parts[0]);
-			
-			for (int i = 1; i < parts.length; i++) {
-				
-				result = divide(result, Double.parseDouble(parts[i]));
-				
-			}
-			
-			//result = divide(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
-		}
-		
 		if(equation.contains("*")) {
-
-			String[] parts = equation.split("\\*");
-			
-			result = Double.parseDouble(parts[0]);
-			
-			for (int i = 1; i < parts.length; i++) {
-			
-				result = multiplication(result, Double.parseDouble(parts[i]));
-			}
-			
-			//result = multiply(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
-			
+			return processMultiplication(equation);
+		}
+		if(equation.contains("/")) {
+			return processDivision(equation);
+		}
+		if(equation.matches("[0-9]+")) {
+			return Double.parseDouble(equation);
+		}
+		if(equation.matches("[0-9].+")) {
+			return Double.parseDouble(equation);
 		}
 		
-		String resultStr = result + "";
-		return resultStr;
+		return Double.NaN;
+		
+	}
+
+	private double processMultiplication(String equation) {
+		String[] parts = equation.split("\\*");
+		double result = Double.parseDouble(parts[0]);
+		
+		for (int i = 1; i < parts.length; i++) {
+			result *= sum(parts[i]);
+		}
+		return result;
+	}
+
+	private double processDivision(String equation) {
+		String[] parts = equation.split("/");
+		double result = Double.parseDouble(parts[0]);
+		
+		if(Double.parseDouble(parts[0]) == 0 || Double.parseDouble(parts[1]) == 0) {
+			throw new ArithmeticException("You can't divide by zero");
+		}
+		
+		for (int i = 1; i < parts.length; i++) {
+			result /= sum(parts[i]);
+		}
+		return result;
+	}
+
+	private double ProcessSubtraction(String equation) {
+		String[] parts = equation.split("-");
+		double result = Double.parseDouble(parts[0]);
+		for (int i = 1; i < parts.length; i++) {
+			result -= sum(parts[i]);
+		}
+		return result;
+	}
+
+	private double processAddition(String equation) {
+		String[] parts = equation.split("\\+");
+		double result = 0;
+		for (String str : parts) {
+			result += sum(str);
+			
+		}
+		return result;
+	}
+	
+	public String calculateExpression(String equation) {
+		double resulttmp = sum(equation);
+		
+		String result = resulttmp + "";
+		return result;
 	}
 	
 }
+	
